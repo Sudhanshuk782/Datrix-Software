@@ -634,7 +634,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
         <span class="p-live">● Available now</span>
         <div class="p-ico ico-bl">⚡</div>
         <div class="p-name">CAN Studio</div>
-        <div class="p-tag">Heavy CAN Log Analysis · v2.7.0</div>
+        <div class="p-tag">Heavy CAN Log Analysis · <span class="cs-ver">Latest</span></div>
         <div class="p-desc">Decode Vector BLF, ASC, and PEAK TRC files with your DBC. Analyse cycle times, plot signal waveforms with a live cursor readout, validate pass/fail rules against the full dataset, and export professional reports. J1939 / PGN decoding built in. No dongle needed.</div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center">
           <a class="p-link" href="#" onclick="event.stopPropagation();openCS();return false" style="margin-top:0">Full details &amp; pricing →</a>
@@ -817,7 +817,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   <div class="modal">
     <button class="mx" onclick="closeCS()">✕</button>
     <div class="mh mh-cs">
-      <div class="mtag mtag-b">⚡ Available now · v2.7.0 · Windows 10/11</div>
+      <div class="mtag mtag-b">⚡ Available now · <span class="cs-ver">Latest</span> · Windows 10/11</div>
       <div class="mtitle">CAN Studio</div>
       <div class="msub">Heavy CAN Log Analysis Platform — Decode · Analyse · Validate · Report</div>
       <div class="mchips">
@@ -834,11 +834,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
           <a class="dl-card primary" href="https://github.com/Sudhanshuk782/CAN-Studio/releases/latest/download/CANStudio_Setup.exe">
             <div class="dl-ico">&#128190;</div>
             <div class="dl-body">
-              <div class="dl-title">CAN Studio Installer <span class="dl-ver">v2.7.0</span></div>
-              <div class="dl-desc">Windows 10 / 11 installer. All dependencies bundled &mdash; no Python required. 10-day free trial starts on first launch. Filename: CANStudio_v2.7.0_Setup.exe</div>
+              <div class="dl-title">CAN Studio Installer <span class="dl-ver cs-ver">Latest</span> <span style="font-weight:400;opacity:.75">(click to download)</span></div>
+              <div class="dl-desc">Windows 10 / 11 installer. All dependencies bundled &mdash; no Python required. 10-day free trial starts on first launch. You always get the newest release. Filename: CANStudio_Setup.exe</div>
               <div class="dl-meta">
                 <span>&#128187; Windows 64-bit</span>
-                <span>&#128230; CANStudio_v2.7.0_Setup.exe</span>
+                <span>&#128230; CANStudio_Setup.exe</span>
                 <span>&#9989; Free trial included</span><span>&#9888; See SmartScreen note below</span>
               </div>
             </div>
@@ -931,7 +931,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
       <div class="ms">
         <div class="ms-t">Installation</div>
         <div class="steps">
-          <div class="step"><div class="s-line"></div><div class="snum">1</div><div class="sbody"><div class="st2">Request the installer</div><div class="sd">Email <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Sudhanshuk782@gmail.com&su=CAN%20Studio%20Trial%20Request&body=Name%3A%20%0ACompany%3A%20%0APlease%20send%20me%20the%20CAN%20Studio%20installer." target="_blank" rel="noopener" style="color:var(--blueh)">Sudhanshuk782@gmail.com</a>. We'll send the download link for <span style="font-family:var(--mono);color:var(--teal)">CANStudio_v2.7.0_Setup.exe</span> within hours.</div></div></div>
+          <div class="step"><div class="s-line"></div><div class="snum">1</div><div class="sbody"><div class="st2">Request the installer</div><div class="sd">Email <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Sudhanshuk782@gmail.com&su=CAN%20Studio%20Trial%20Request&body=Name%3A%20%0ACompany%3A%20%0APlease%20send%20me%20the%20CAN%20Studio%20installer." target="_blank" rel="noopener" style="color:var(--blueh)">Sudhanshuk782@gmail.com</a>. We'll send the download link for <span style="font-family:var(--mono);color:var(--teal)">CANStudio_Setup.exe</span> within hours.</div></div></div>
           <div class="step"><div class="s-line"></div><div class="snum">2</div><div class="sbody"><div class="st2">Run the installer</div><div class="sd">Double-click the .exe. If SmartScreen shows "Unknown publisher", click More info → Run anyway. All dependencies bundled.<div class="scode">C:\Program Files\CANStudio</div></div></div></div>
           <div class="step"><div class="s-line"></div><div class="snum">3</div><div class="sbody"><div class="st2">Launch — 10-day trial starts</div><div class="sd">Open from the Desktop shortcut. Free trial begins on first launch. No registration or internet needed.</div></div></div>
           <div class="step"><div class="s-line"></div><div class="snum">4</div><div class="sbody"><div class="st2">Activate when ready</div><div class="sd">Help → Activate Licence. Copy your BIOS UUID. Email it to us with your plan. Key sent the same day.</div></div></div>
@@ -1333,6 +1333,30 @@ onScroll();
 
 totop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
 
+</script>
+
+<!-- ─── CAN Studio version label ────────────────────────────────────────────
+     The page ships saying "Latest", which is always true and never needs a
+     release-day edit. If GitHub's API is reachable we additionally show the
+     real tag, e.g. "Latest (v2.8.0)". If it is not — offline visitor, blocked
+     API, or GitHub's 60-req/hour unauthenticated limit — the label simply
+     stays "Latest" rather than showing a stale or wrong number. -->
+<script>
+(function () {
+  var REPO = 'Sudhanshuk782/CAN-Studio';
+  fetch('https://api.github.com/repos/' + REPO + '/releases/latest',
+        { headers: { 'Accept': 'application/vnd.github+json' } })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (!d || !d.tag_name) return;
+      var tag = String(d.tag_name).replace(/^v/i, '').trim();
+      if (!tag) return;
+      document.querySelectorAll('.cs-ver').forEach(function (el) {
+        el.textContent = 'Latest (v' + tag + ')';
+      });
+    })
+    .catch(function () { /* leave the label as "Latest" */ });
+})();
 </script>
 </body>
 </html>
